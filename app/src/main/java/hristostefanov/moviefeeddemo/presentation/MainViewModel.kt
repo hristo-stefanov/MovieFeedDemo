@@ -12,8 +12,13 @@ import hristostefanov.moviefeeddemo.Result
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(pagingSource: PagingSource): ViewModel() {
-    private val pager: Pager<Int, Result> = Pager<Int, Result>(PagingConfig(pageSize = 20)) {
+class MainViewModel @Inject constructor(pagingSource: PagingSource) : ViewModel() {
+    private val pager: Pager<Int, Result> = Pager<Int, Result>(
+        PagingConfig(
+            pageSize = 20, // suggested to the PagingSource via LoadParams
+            prefetchDistance = 30 // several times the number of visible items
+        )
+    ) {
         pagingSource
     }
 
