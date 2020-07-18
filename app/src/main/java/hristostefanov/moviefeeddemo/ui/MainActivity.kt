@@ -9,10 +9,17 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import hristostefanov.moviefeeddemo.App
 import hristostefanov.moviefeeddemo.R
+import hristostefanov.moviefeeddemo.ResultComparator
 import hristostefanov.moviefeeddemo.presentation.MainViewModel
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val composite = CompositeDisposable()
+    private val mainAdapter = MainAdapter(ResultComparator)
 
     private val viewModel: MainViewModel by viewModels {
         object : AbstractSavedStateViewModelFactory(this, null) {
@@ -33,7 +40,27 @@ class MainActivity : AppCompatActivity() {
 
         with(recyclerView) {
             layoutManager = LinearLayoutManager(this@MainActivity)
-
+            adapter = mainAdapter
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // TODO
+//            .autoDispose(this) // Using AutoDispose to handle subscription lifecycle.
+
+
+        viewModel.observable.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            mainAdapter.submitData(lifecycle, it)
+        }.also {
+            composite.add(it)
+        }
+    }
+
+    override fun onStop() {
+        // not dispose() - will be reused
+        composite.clear()
+        super.onStop()
     }
 }

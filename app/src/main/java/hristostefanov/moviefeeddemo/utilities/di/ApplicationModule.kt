@@ -3,8 +3,9 @@ package hristostefanov.moviefeeddemo.utilities.di
 import dagger.Module
 import dagger.Provides
 import hristostefanov.moviefeeddemo.BuildConfig
+import hristostefanov.moviefeeddemo.Service
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
@@ -15,7 +16,12 @@ class ApplicationModule {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.SERVICE_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
+    }
+
+    @Provides
+    fun provideService(retrofit: Retrofit): Service {
+        return retrofit.create(Service::class.java)
     }
 }
