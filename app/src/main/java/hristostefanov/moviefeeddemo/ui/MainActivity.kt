@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import hristostefanov.moviefeeddemo.App
 import hristostefanov.moviefeeddemo.R
 import hristostefanov.moviefeeddemo.ResultComparator
 import hristostefanov.moviefeeddemo.presentation.MainViewModel
-import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -42,14 +42,22 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = mainAdapter
         }
+
+        mainAdapter.addLoadStateListener {
+            swipeRefreshLayout.isRefreshing = it.refresh is LoadState.Loading
+            // TODO display error message
+        }
+
+        // TODO
+        // mainAdapter.dataRefreshFlow
+
+        swipeRefreshLayout.setOnRefreshListener {
+            mainAdapter.refresh()
+        }
     }
 
     override fun onStart() {
         super.onStart()
-
-        // TODO
-//            .autoDispose(this) // Using AutoDispose to handle subscription lifecycle.
-
 
         viewModel.observable.observeOn(AndroidSchedulers.mainThread()).subscribe {
             mainAdapter.submitData(lifecycle, it)

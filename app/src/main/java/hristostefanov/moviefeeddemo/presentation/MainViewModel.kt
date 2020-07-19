@@ -11,8 +11,9 @@ import hristostefanov.moviefeeddemo.PagingSource
 import hristostefanov.moviefeeddemo.Result
 import io.reactivex.Observable
 import javax.inject.Inject
+import javax.inject.Provider
 
-class MainViewModel @Inject constructor(pagingSource: PagingSource) : ViewModel() {
+class MainViewModel @Inject constructor(pagingSourceProvider: Provider<PagingSource>) : ViewModel() {
     private val pagerConfig = PagingConfig(
         pageSize = 20, // suggested to the PagingSource via LoadParams
         prefetchDistance = 30 // several times the number of visible items
@@ -21,7 +22,8 @@ class MainViewModel @Inject constructor(pagingSource: PagingSource) : ViewModel(
     private val pager: Pager<Int, Result> = Pager(
         config = pagerConfig,
         pagingSourceFactory = {
-            pagingSource
+            // the factory requires a new instance each time
+            pagingSourceProvider.get()
         })
 
     val observable: Observable<PagingData<Result>> = pager.observable.cachedIn(viewModelScope)
