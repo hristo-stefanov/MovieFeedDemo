@@ -3,7 +3,7 @@ package hristostefanov.moviefeeddemo.utilities.di
 import dagger.Module
 import dagger.Provides
 import hristostefanov.moviefeeddemo.BuildConfig
-import hristostefanov.moviefeeddemo.business.gateways.Service
+import hristostefanov.moviefeeddemo.domain.api.Service
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory

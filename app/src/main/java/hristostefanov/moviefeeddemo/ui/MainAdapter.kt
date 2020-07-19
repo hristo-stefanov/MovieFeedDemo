@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import hristostefanov.moviefeeddemo.R
-import hristostefanov.moviefeeddemo.business.entities.Movie
+import hristostefanov.moviefeeddemo.domain.Movie
 import kotlinx.android.synthetic.main.movie_item.view.*
 
 class MainAdapter(

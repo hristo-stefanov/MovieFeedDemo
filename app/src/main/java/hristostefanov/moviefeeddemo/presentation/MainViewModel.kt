@@ -7,9 +7,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.cachedIn
 import androidx.paging.rxjava2.observable
-import hristostefanov.moviefeeddemo.business.entities.Movie
-import hristostefanov.moviefeeddemo.business.interactors.UpcomingMoviesPagingSource
-import hristostefanov.moviefeeddemo.business.gateways.Result
+import hristostefanov.moviefeeddemo.domain.Movie
+import hristostefanov.moviefeeddemo.domain.UpcomingMoviesPagingSource
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Provider

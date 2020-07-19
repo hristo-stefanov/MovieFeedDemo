@@ -1,8 +1,7 @@
 package hristostefanov.moviefeeddemo.ui
 
 import androidx.recyclerview.widget.DiffUtil
-import hristostefanov.moviefeeddemo.business.entities.Movie
-import hristostefanov.moviefeeddemo.business.gateways.Result
+import hristostefanov.moviefeeddemo.domain.Movie
 
 object MovieComparator: DiffUtil.ItemCallback<Movie>() {
     override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {

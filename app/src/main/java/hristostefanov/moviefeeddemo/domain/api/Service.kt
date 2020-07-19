@@ -1,4 +1,4 @@
-package hristostefanov.moviefeeddemo.business.gateways
+package hristostefanov.moviefeeddemo.domain.api
 
 import io.reactivex.Single
 import retrofit2.http.GET
