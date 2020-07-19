@@ -1,6 +1,7 @@
 package hristostefanov.moviefeeddemo.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
@@ -43,13 +44,25 @@ class MainActivity : AppCompatActivity() {
             adapter = mainAdapter
         }
 
-        mainAdapter.addLoadStateListener {
-            swipeRefreshLayout.isRefreshing = it.refresh is LoadState.Loading
-            // TODO display error message
-        }
+        mainAdapter.addLoadStateListener { loadStates ->
+            // NOTE: the state properties #refresh #append and #preprend are combined for #source and #mediator
 
-        // TODO
-        // mainAdapter.dataRefreshFlow
+            // #refresh is Loading when loading the first page, not only for forced refresh
+            // with adapter.refresh()
+            // We should consider also #preprend and #append states but there is an issue
+            // makes #append stick to Loading when reaching the last page
+            val isLoading = loadStates.refresh is LoadState.Loading
+
+            val listOfStates = listOf(loadStates.refresh, loadStates.prepend, loadStates.append)
+
+            // the order in the list matter for errors, because an error can arise on one more states
+            // usually the first (on #refresh) is the most descriptive
+            val errorState = listOfStates.find { it is LoadState.Error } as? LoadState.Error
+
+            swipeRefreshLayout.isRefreshing = isLoading
+            errorMessageTextView.visibility = if (errorState != null) View.VISIBLE else View.GONE
+            errorMessageTextView.text = errorState?.error?.localizedMessage ?: ""
+        }
 
         swipeRefreshLayout.setOnRefreshListener {
             mainAdapter.refresh()
