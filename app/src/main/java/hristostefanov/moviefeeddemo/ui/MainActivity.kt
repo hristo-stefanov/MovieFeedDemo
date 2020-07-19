@@ -9,6 +9,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import hristostefanov.moviefeeddemo.App
 import hristostefanov.moviefeeddemo.R
 import hristostefanov.moviefeeddemo.ResultComparator
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val composite = CompositeDisposable()
-    private val mainAdapter = MainAdapter(ResultComparator)
+    private lateinit var mainAdapter: MainAdapter
 
     private val viewModel: MainViewModel by viewModels {
         object : AbstractSavedStateViewModelFactory(this, null) {
@@ -38,6 +39,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val glide = Glide.with(this)
+        mainAdapter = MainAdapter(glide, ResultComparator)
 
         with(recyclerView) {
             layoutManager = LinearLayoutManager(this@MainActivity)
