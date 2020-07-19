@@ -6,24 +6,19 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class PagingSource @Inject constructor(val service: Service): RxPagingSource<Int, Result>() {
+class PagingSource @Inject constructor(private val service: Service) : RxPagingSource<Int, Result>() {
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, Result>> {
         val nextPageNumber = params.key ?: 1
 
         // TODO pass the API_KEY
         return service.getMoveUpcoming(BuildConfig.API_KEY, nextPageNumber)
             .subscribeOn(Schedulers.io())
-                // TODO for debugging
-            .doOnError {
-                it.printStackTrace()
-            }
-            .map {response ->
+            .map { response ->
                 LoadResult.Page(response.results, prevKey = null, nextKey = response.page + 1)
+                        as LoadResult<Int, Result> // helps .onErrorReturn type inference
             }
-        // TODO
-
-//            .onErrorReturn {
-//                LoadResult.Error(it)
-//            }
+            .onErrorReturn {
+                Error(it)
+            }
     }
 }
