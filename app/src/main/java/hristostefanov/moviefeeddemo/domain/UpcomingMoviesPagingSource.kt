@@ -2,28 +2,28 @@ package hristostefanov.moviefeeddemo.domain
 
 import androidx.paging.PagingSource.LoadResult.Error
 import androidx.paging.rxjava2.RxPagingSource
-import hristostefanov.moviefeeddemo.BuildConfig
 import hristostefanov.moviefeeddemo.domain.api.Service
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+import javax.inject.Named
 
-// TODO inject
-private const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w300/"
-
-class UpcomingMoviesPagingSource @Inject constructor(private val service: Service) : RxPagingSource<Int, Movie>() {
+class UpcomingMoviesPagingSource @Inject constructor(
+    private val service: Service,
+    @Named("apiKey") private val apiKey: String,
+    @Named("imageBaseURL") private val imageBaseURL: String
+) : RxPagingSource<Int, Movie>() {
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, Movie>> {
         val nextPageNumber = params.key ?: 1
 
-        // TODO pass the API_KEY
-        return service.getMoveUpcoming(BuildConfig.API_KEY, nextPageNumber)
+        return service.getMoveUpcoming(apiKey, nextPageNumber)
             .subscribeOn(Schedulers.io())
             .map { response ->
                 val movies = response.results.map {
                     Movie(
                         it.id,
                         it.title,
-                        IMAGE_BASE_URL + it.posterPath
+                        imageBaseURL + it.posterPath
                     )
                 }
                 LoadResult.Page(movies, prevKey = null, nextKey = response.page + 1)

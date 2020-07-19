@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
 
         val glide = Glide.with(this)
         mainAdapter = MainAdapter(glide,
-            // TODO inject it
             MovieComparator
         )
 
