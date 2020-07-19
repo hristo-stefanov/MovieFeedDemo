@@ -7,24 +7,25 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.cachedIn
 import androidx.paging.rxjava2.observable
-import hristostefanov.moviefeeddemo.PagingSource
-import hristostefanov.moviefeeddemo.Result
+import hristostefanov.moviefeeddemo.business.entities.Movie
+import hristostefanov.moviefeeddemo.business.interactors.UpcomingMoviesPagingSource
+import hristostefanov.moviefeeddemo.business.gateways.Result
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Provider
 
-class MainViewModel @Inject constructor(pagingSourceProvider: Provider<PagingSource>) : ViewModel() {
+class MainViewModel @Inject constructor(upcomingMoviesPagingSourceProvider: Provider<UpcomingMoviesPagingSource>) : ViewModel() {
     private val pagerConfig = PagingConfig(
         pageSize = 20, // suggested to the PagingSource via LoadParams
         prefetchDistance = 30 // several times the number of visible items
     )
 
-    private val pager: Pager<Int, Result> = Pager(
+    private val pager: Pager<Int, Movie> = Pager(
         config = pagerConfig,
         pagingSourceFactory = {
             // the factory requires a new instance each time
-            pagingSourceProvider.get()
+            upcomingMoviesPagingSourceProvider.get()
         })
 
-    val observable: Observable<PagingData<Result>> = pager.observable.cachedIn(viewModelScope)
+    val movies: Observable<PagingData<Movie>> = pager.observable.cachedIn(viewModelScope)
 }

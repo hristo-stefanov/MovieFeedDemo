@@ -1,4 +1,4 @@
-package hristostefanov.moviefeeddemo
+package hristostefanov.moviefeeddemo.business.gateways
 
 import com.google.gson.annotations.SerializedName
 

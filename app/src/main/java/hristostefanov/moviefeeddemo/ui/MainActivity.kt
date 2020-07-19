@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import hristostefanov.moviefeeddemo.App
 import hristostefanov.moviefeeddemo.R
-import hristostefanov.moviefeeddemo.ResultComparator
 import hristostefanov.moviefeeddemo.presentation.MainViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -41,7 +40,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val glide = Glide.with(this)
-        mainAdapter = MainAdapter(glide, ResultComparator)
+        mainAdapter = MainAdapter(glide,
+            // TODO inject it
+            MovieComparator
+        )
 
         with(recyclerView) {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -76,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        viewModel.observable.observeOn(AndroidSchedulers.mainThread()).subscribe {
+        viewModel.movies.observeOn(AndroidSchedulers.mainThread()).subscribe {
             mainAdapter.submitData(lifecycle, it)
         }.also {
             composite.add(it)

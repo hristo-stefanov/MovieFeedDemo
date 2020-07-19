@@ -1,9 +1,8 @@
-package hristostefanov.moviefeeddemo
+package hristostefanov.moviefeeddemo.business.gateways
 
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
-import retrofit2.http.QueryName
 
 interface Service {
     @GET("movie/upcoming")
