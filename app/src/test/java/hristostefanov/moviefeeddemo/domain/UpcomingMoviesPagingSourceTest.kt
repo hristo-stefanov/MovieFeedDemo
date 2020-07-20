@@ -7,8 +7,9 @@ import hristostefanov.moviefeeddemo.domain.api.Service
 import io.reactivex.Single
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
-import org.mockito.ArgumentMatchers
-import org.mockito.BDDMockito.*
+import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.then
 import org.mockito.Mockito.mock
 
 class UpcomingMoviesPagingSourceTest {
@@ -23,7 +24,7 @@ class UpcomingMoviesPagingSourceTest {
 
     @Test
     fun `should query service as requested`() = runBlocking {
-        given(service.getMoveUpcoming(any(), ArgumentMatchers.anyInt())).willReturn(responseSingle)
+        given(service.getMoveUpcoming(any(), anyInt())).willReturn(responseSingle)
 
         unit.load(params)
 
