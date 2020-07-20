@@ -32,7 +32,7 @@ class ApplicationModule {
     fun provideApiKey() = BuildConfig.API_KEY
 
     @Provides @Named("imageBaseURL")
-    fun provideImageBaseURL() = "https://image.tmdb.org/t/p/w300/"
+    fun provideImageBaseURL() = "https://image.tmdb.org/t/p/w342/"
 
     @Provides
     fun provideMainAdapter(): MainAdapter {
