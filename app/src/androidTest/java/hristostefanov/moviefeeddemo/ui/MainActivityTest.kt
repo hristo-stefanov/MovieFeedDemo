@@ -15,23 +15,24 @@ import hristostefanov.moviefeeddemo.presentation.MainViewModel
 import io.reactivex.Observable
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert.assertThat
-import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.then
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.spy
 import java.util.concurrent.atomic.AtomicInteger
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
-    private val viewModel = mock(MainViewModel::class.java)
-
     @get:Rule
     var activityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java, false, false)
 
-    var subscriptionCount = AtomicInteger()
+    private val viewModel = mock(MainViewModel::class.java)
+    private var subscriptionCount = AtomicInteger()
+    private val mainAdapter = spy(MainAdapter(MovieComparator))
 
     @Before
     fun beforeEach() {
@@ -42,6 +43,8 @@ class MainActivityTest {
                 return viewModel as T
             }
         }
+
+        UIUnitTestRegistry.mainAdapter = mainAdapter
 
         val pagingData = PagingData.empty<Movie>()
         // Note: Mockito cannot spy on Observable on Android, hence tapping into the stream
@@ -59,11 +62,12 @@ class MainActivityTest {
     }
 
     @Test
-    fun testTODO() {
-        // TODO
+    fun shouldRefreshAdapterOnSwipeToRefreshGesture() {
         activityRule.launchActivity(Intent())
+
         onView(withId(R.id.swipeRefreshLayout)).perform(swipeDown())
-        fail()
+
+        then(mainAdapter).should().refresh()
     }
 
 }

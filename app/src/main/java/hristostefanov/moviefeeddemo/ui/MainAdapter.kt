@@ -11,13 +11,16 @@ import hristostefanov.moviefeeddemo.R
 import hristostefanov.moviefeeddemo.domain.Movie
 import kotlinx.android.synthetic.main.movie_item.view.*
 
-class MainAdapter(
-    private val glide: RequestManager,
+open class MainAdapter(
     diffCallback: DiffUtil.ItemCallback<Movie>
 ) : PagingDataAdapter<Movie, MainAdapter.VH>(
     diffCallback
-
 ) {
+    private lateinit var glide: RequestManager
+
+    fun init(glide: RequestManager) {
+        this.glide = glide
+    }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item: Movie? = getItem(position)

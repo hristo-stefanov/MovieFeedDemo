@@ -11,4 +11,6 @@ object UIUnitTestRegistry {
     // The root issue here is that mocking a view model involves mocking a type that we do not own -
     // the base class ViewModel.
     var viewModelFactory: ViewModelProvider.Factory? = null
+
+    var mainAdapter: MainAdapter? = null
 }

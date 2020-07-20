@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.Provides
 import hristostefanov.moviefeeddemo.BuildConfig
 import hristostefanov.moviefeeddemo.domain.api.Service
+import hristostefanov.moviefeeddemo.ui.MainAdapter
+import hristostefanov.moviefeeddemo.ui.MovieComparator
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -31,4 +33,9 @@ class ApplicationModule {
 
     @Provides @Named("imageBaseURL")
     fun provideImageBaseURL() = "https://image.tmdb.org/t/p/w300/"
+
+    @Provides
+    fun provideMainAdapter(): MainAdapter {
+        return MainAdapter(MovieComparator)
+    }
 }

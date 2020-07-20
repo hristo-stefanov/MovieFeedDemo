@@ -32,11 +32,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val glide = Glide.with(this)
-        mainAdapter = MainAdapter(
-            glide,
-            MovieComparator
-        )
+        mainAdapter = UIUnitTestRegistry.mainAdapter ?: (application as App).component.getMainAdapter()
+        mainAdapter.init(Glide.with(this@MainActivity))
 
         with(recyclerView) {
             layoutManager = LinearLayoutManager(this@MainActivity)
