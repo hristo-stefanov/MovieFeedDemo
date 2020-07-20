@@ -6,5 +6,8 @@ import retrofit2.http.Query
 
 interface Service {
     @GET("movie/upcoming")
-    fun getMoveUpcoming(@Query("api_key") apiKey: String, @Query("page") page: Int): Single<Response>
+    fun getMoveUpcoming(
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int
+    ): Single<Response>
 }

@@ -28,7 +28,8 @@ import java.util.concurrent.atomic.AtomicInteger
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
     @get:Rule
-    var activityRule: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java, false, false)
+    var activityRule: ActivityTestRule<MainActivity> =
+        ActivityTestRule(MainActivity::class.java, false, false)
 
     private val viewModel = mock(MainViewModel::class.java)
     private var subscriptionCount = AtomicInteger()
@@ -69,5 +70,4 @@ class MainActivityTest {
 
         then(mainAdapter).should().refresh()
     }
-
 }
