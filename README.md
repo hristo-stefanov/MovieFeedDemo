@@ -8,12 +8,12 @@ Author: Hristo M. Stefanov
 * Paging
 * Material design
 
-# Unit testing
+## Unit testing
 * 2 tests of MainActivity (in isolation)
 * 1 test of UpcomingMoviesPagingSource
 * 2 tests of MainViewModel
 
-# Core technologies
+## Core technologies
 * Jetpack Paging
 * RxJava
 * Kotlin coroutines (for some tests)
