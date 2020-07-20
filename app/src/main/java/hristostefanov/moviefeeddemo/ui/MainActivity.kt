@@ -23,15 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainAdapter: MainAdapter
 
     private val viewModel: MainViewModel by viewModels {
-        object : AbstractSavedStateViewModelFactory(this, null) {
-            override fun <T : ViewModel?> create(
-                key: String,
-                modelClass: Class<T>,
-                handle: SavedStateHandle
-            ): T {
-                @Suppress("UNCHECKED_CAST")
-                return (application as App).component.getMainViewModel() as T
-            }
+        viewModelFactory {
+            (application as App).component.getMainViewModel()
         }
     }
 
@@ -40,7 +33,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val glide = Glide.with(this)
-        mainAdapter = MainAdapter(glide,
+        mainAdapter = MainAdapter(
+            glide,
             MovieComparator
         )
 

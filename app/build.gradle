@@ -84,5 +84,14 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation "org.mockito:mockito-core:3.3.3"
+    // Using the "inline" edition of "dexmaker" by LinkedIn, allows mocking final classes
+    // on Android P (9) or later. However v.2.25.0 and 2.25.1 do not work with
+    // com.android.tools.build:gradle: 3.6.x (but worked with 3.5.x)
+    // For this reason we use dexmaker-mockito instead of dexmaker-mockito-inline
+    // and make the classes and members being mocked `open` until the issue is resolved.
+//    androidTestImplementation 'com.linkedin.dexmaker:dexmaker-mockito-inline:2.25.1'
+    androidTestImplementation 'com.linkedin.dexmaker:dexmaker-mockito:2.25.1'
 
 }
