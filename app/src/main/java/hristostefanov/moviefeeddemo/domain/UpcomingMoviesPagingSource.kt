@@ -13,6 +13,7 @@ class UpcomingMoviesPagingSource @Inject constructor(
     @Named("apiKey") private val apiKey: String,
     @Named("imageBaseURL") private val imageBaseURL: String
 ) : RxPagingSource<Int, Movie>() {
+
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, Movie>> {
         val nextPageNumber = params.key ?: 1
 

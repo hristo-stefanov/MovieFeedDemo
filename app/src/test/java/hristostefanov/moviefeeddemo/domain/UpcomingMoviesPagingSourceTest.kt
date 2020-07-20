@@ -20,7 +20,7 @@ class UpcomingMoviesPagingSourceTest {
 
     private val service = mock(Service::class.java)
     private val unit = UpcomingMoviesPagingSource(service, apiKey, imageBaseURL)
-    private val responseSingle = Single.just(Response(1, listOf(), 1,1))
+    private val responseSingle = Single.just(Response(1, listOf(), 1, 1))
 
     @Test
     fun `should query service as requested`() = runBlocking {

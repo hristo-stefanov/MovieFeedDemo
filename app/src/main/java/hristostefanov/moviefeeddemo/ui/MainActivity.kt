@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -32,7 +29,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mainAdapter = UIUnitTestRegistry.mainAdapter ?: (application as App).component.getMainAdapter()
+        mainAdapter =
+            UIUnitTestRegistry.mainAdapter ?: (application as App).component.getMainAdapter()
         mainAdapter.init(Glide.with(this@MainActivity))
 
         with(recyclerView) {
@@ -76,7 +74,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        // not dispose() - will be reused
+        // clear() instead of dispose() - will be reused
         composite.clear()
         super.onStop()
     }

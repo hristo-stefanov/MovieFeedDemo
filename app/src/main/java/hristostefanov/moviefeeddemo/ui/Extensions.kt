@@ -1,8 +1,6 @@
 package hristostefanov.moviefeeddemo.ui
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -13,7 +11,10 @@ fun AppCompatActivity.viewModelFactory(block: (handle: SavedStateHandle) -> View
     return UIUnitTestRegistry.viewModelFactory ?: ViewModelFactory(this, block)
 }
 
-private class ViewModelFactory(owner: SavedStateRegistryOwner, val block: (handle: SavedStateHandle) -> ViewModel) :
+private class ViewModelFactory(
+    owner: SavedStateRegistryOwner,
+    val block: (handle: SavedStateHandle) -> ViewModel
+) :
     AbstractSavedStateViewModelFactory(owner, null) {
 
     @Suppress("UNCHECKED_CAST")

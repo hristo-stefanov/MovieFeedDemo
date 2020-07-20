@@ -28,11 +28,12 @@ open class MainAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
         return VH(itemView)
     }
 
-    inner class VH(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textView = itemView.textView
         private val imageView = itemView.imageView
         fun bind(item: Movie?) {

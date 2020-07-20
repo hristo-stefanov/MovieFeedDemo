@@ -7,7 +7,6 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.BDDMockito.given
 import org.mockito.BDDMockito.then
-import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.timeout
 import javax.inject.Provider
